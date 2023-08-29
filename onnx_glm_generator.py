@@ -241,8 +241,8 @@ if __name__ == '__main__':
     print(
         tokenizer.batch_decode(
             model.generate(
-                input_ids=tokenizer(['10月25日,金固股份曾发布公告,公司实控人孙锋峰、孙金国、孙利群及一致行动人孙曙虹已累计质押3.39亿股,约占所持公股份总数的93.57%,这句话有几类要素?',
-                                     '1945年2月，在雅尔达会议上，美国、英国为换取苏联出兵东北，减少美国的牺牲，未经中国国民政府同意赋予苏联大连国际化、苏联在大连港特殊权力、苏联租用旅顺港设立海军基地以及苏联在中东铁路和南满铁路特权。这句话中提到的雅尔达会议是什么时候召开的?'],
+                input_ids=tokenizer(['给我推荐几个北京值得去的景点。',
+                                     '为什么北京被称为美食荒漠？难道那儿就没有什么好吃的东西吗？'],
                                     return_tensors="pt", truncation=True, padding=True, max_length=2000
                                     ).input_ids.to(model.device),
                 max_length=100, do_sample=False, temperature=1.), skip_special_tokens=True)
@@ -251,21 +251,7 @@ if __name__ == '__main__':
     for i in range(10):
         model.chat(
             tokenizer,
-            '10月25日,金固股份曾发布公告,公司实控人孙锋峰、孙金国、孙利群及一致行动人孙曙虹已累计质押3.39亿股,约占所持公股份总数的93.57%,这句话有几类要素?',
+            '给我推荐几个北京值得去的景点。',
             max_length=100, do_sample=False, temperature=1.
         )
     print(f"onnx模型推理完毕！用时{round((time.time() - start) * 1000 / 10, 3)}ms")
-    print(
-        model.chat(
-            tokenizer,
-            '10月25日,金固股份曾发布公告,公司实控人孙锋峰、孙金国、孙利群及一致行动人孙曙虹已累计质押3.39亿股,约占所持公股份总数的93.57%,这句话有几类要素?',
-            max_length=100, do_sample=False, temperature=1.
-        )
-    )
-    print(
-        model.chat(
-            tokenizer,
-            '1945年2月，在雅尔达会议上，美国、英国为换取苏联出兵东北，减少美国的牺牲，未经中国国民政府同意赋予苏联大连国际化、苏联在大连港特殊权力、苏联租用旅顺港设立海军基地以及苏联在中东铁路和南满铁路特权。这句话中提到的雅尔达会议是什么时候召开的?',
-            max_length=100, do_sample=False, temperature=1.
-        )
-    )
